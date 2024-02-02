@@ -8,6 +8,8 @@ import pro.sky.Course2HomeworkListSpring.exceptions.EmployeeAlreadyAddedExceptio
 import pro.sky.Course2HomeworkListSpring.exceptions.EmployeeNotFoundException;
 import pro.sky.Course2HomeworkListSpring.exceptions.EmployeeStorageIsFullException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
@@ -52,5 +54,10 @@ public class EmployeeController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @GetMapping(path = "/print")
+    public List<Employee> print() {
+        return employeeService.printAllEmployees();
     }
 }

@@ -41,6 +41,6 @@ public class Employee {
     @Override
     public boolean equals(Object obj) {
         Employee employee = (Employee) obj;
-        return this.firstName.equals(employee.getFirstName())  && this.lastName.equals(employee.getLastName());
+        return this.firstName.equals(employee.getFirstName()) && this.lastName.equals(employee.getLastName());
     }
 }
