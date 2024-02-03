@@ -23,37 +23,22 @@ public class EmployeeController {
     public Employee add(@RequestParam("firstName") String firstName,
                         @RequestParam("lastName") String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        try {
-            employeeService.addEmployee(employee);
-            return employeeService.findEmployee(firstName, lastName);
-        } catch (EmployeeAlreadyAddedException | EmployeeStorageIsFullException | EmployeeNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        employeeService.addEmployee(employee);
+        return employee;
     }
 
     @GetMapping(path = "/find")
     public Employee find(@RequestParam("firstName") String firstName,
                          @RequestParam("lastName") String lastName) {
-        try {
-            return employeeService.findEmployee(firstName, lastName);
-        } catch (EmployeeNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return employeeService.findEmployee(firstName, lastName);
     }
 
     @GetMapping(path = "/remove")
     public Employee remove(@RequestParam("firstName") String firstName,
                            @RequestParam("lastName") String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        try {
-            employeeService.removeEmployee(firstName, lastName);
-            return employee;
-        } catch (EmployeeNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        employeeService.removeEmployee(firstName, lastName);
+        return employee;
     }
 
     @GetMapping(path = "/print")

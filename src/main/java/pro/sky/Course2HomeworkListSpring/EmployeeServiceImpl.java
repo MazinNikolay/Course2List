@@ -6,13 +6,18 @@ import pro.sky.Course2HomeworkListSpring.exceptions.EmployeeNotFoundException;
 import pro.sky.Course2HomeworkListSpring.exceptions.EmployeeStorageIsFullException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     final private static int maxRangeEmployee = 4;
 
-    List<Employee> employees = new ArrayList<>();
+    private final List<Employee> employees;
+
+    public EmployeeServiceImpl() {
+        this.employees = new ArrayList<>();
+    }
 
     @Override
     public void addEmployee(Employee employee) {
@@ -21,8 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         } else if (employees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("Сотрудник с такими данными уже добавлен");
         }
-        int nextIndexEmployee = employees.size();
-        employees.add(nextIndexEmployee, employee);
+        employees.add(employee);
     }
 
     @Override
@@ -37,17 +41,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee findEmployee(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        for (int i = 0; i < employees.size(); i++) {
-            if (employees.get(i).getFirstName().equals(firstName) &&
-                    employees.get(i).getLastName().equals(lastName)) {
-                return employee;
-            }
+        if (employees.contains(employee)) {
+            return employee;
         }
         throw new EmployeeNotFoundException("Сотрудник с заданными данными не найден");
     }
 
     @Override
     public List<Employee> printAllEmployees() {
-        return employees;
+        return Collections.unmodifiableList(employees);
     }
 }
