@@ -1,4 +1,4 @@
-package pro.sky.Course2HomeworkListSpring;
+package pro.sky.Course2HomeworkListSpring.model;
 
 import java.util.Objects;
 

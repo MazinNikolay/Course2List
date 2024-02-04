@@ -1,9 +1,11 @@
-package pro.sky.Course2HomeworkListSpring;
+package pro.sky.Course2HomeworkListSpring.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import pro.sky.Course2HomeworkListSpring.exception.EmployeeNotFoundException;
+import pro.sky.Course2HomeworkListSpring.model.Employee;
+import pro.sky.Course2HomeworkListSpring.service.EmployeeService;
 
 
 import java.util.List;
@@ -17,12 +19,15 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<String> handleNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Сотрудник не найден");
+    }
+
     @GetMapping(path = "/add")
     public Employee add(@RequestParam("firstName") String firstName,
                         @RequestParam("lastName") String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        employeeService.addEmployee(employee);
-        return employee;
+        return employeeService.addEmployee(firstName, lastName);
     }
 
     @GetMapping(path = "/find")
@@ -34,12 +39,10 @@ public class EmployeeController {
     @GetMapping(path = "/remove")
     public Employee remove(@RequestParam("firstName") String firstName,
                            @RequestParam("lastName") String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        employeeService.removeEmployee(firstName, lastName);
-        return employee;
+        return employeeService.removeEmployee(firstName, lastName);
     }
 
-    @GetMapping(path = "/print")
+    @GetMapping
     public List<Employee> print() {
         return employeeService.printAllEmployees();
     }

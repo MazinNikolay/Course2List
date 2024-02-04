@@ -1,4 +1,4 @@
-package pro.sky.Course2HomeworkListSpring.exceptions;
+package pro.sky.Course2HomeworkListSpring.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
